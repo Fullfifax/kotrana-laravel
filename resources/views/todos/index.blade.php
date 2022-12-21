@@ -29,7 +29,7 @@
         </div>
 
         @foreach ($datas as $data)
-            <div class="alert alert-primary" role="alert">    
+            <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">    
                 {{ $data->name }}
                 @if($data->done)
                     <span class="badge bg-success text-light">done</span>
