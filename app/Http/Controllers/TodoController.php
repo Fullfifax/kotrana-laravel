@@ -3,10 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
+    // To store all users
+    public $users;
+
+    public function __construct() 
+    {
+        $this->users = User::getAllUsers();
+    }
+
+    /**
+     * Assign a to do to an user
+     * 
+     * @param App\Todo $todo
+     * @param App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function affectedTo(Todo $todo, User $user)
+    {
+        $todo->affectedTo_id = $user->id;
+        $todo->affectedBy_id = Auth::user()->id;
+        $todo->update();
+
+        return back();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,14 +40,18 @@ class TodoController extends Controller
      */
     public function index()
     {
+        // To store user connected
+        $userId = Auth::user()->id;
+        $datas = Todo::where(['affectedTo_id' => $userId])->orderBy('id', 'desc')->paginate(5);
+
         /*
         $datas = Todo::all()->reject(function ($todo) {
             return $todo->done == 0;
         });
         */
-        $datas = Todo::paginate(5);
-        
-        return view('todos.index', compact('datas'));
+        $users = $this->users;
+
+        return view('todos.index', compact('datas', 'users'));
     }
 
     /**
@@ -40,8 +70,8 @@ class TodoController extends Controller
     public function undone()
     {
         $datas = Todo::where('done', 0)->paginate(5);
-        
-        return view('todos.index', compact('datas'));
+        $users = $this->users;
+        return view('todos.index', compact('datas', 'users'));
     }
 
     /**
@@ -50,8 +80,8 @@ class TodoController extends Controller
     public function done()
     {
         $datas = Todo::where('done', 1)->paginate(5);
-
-        return view('todos.index', compact('datas'));
+        $users = $this->users;
+        return view('todos.index', compact('datas', 'users'));
     }
 
     /**
@@ -63,6 +93,8 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $todo = new Todo();
+        $todo->creator_id = Auth::user()->id;
+        $todo->affectedTo_id = Auth::user()->id;
         $todo->name = $request->name;
         $todo->description = $request->description;
 
