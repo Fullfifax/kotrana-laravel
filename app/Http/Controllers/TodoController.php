@@ -35,6 +35,26 @@ class TodoController extends Controller
     }
 
     /**
+     * Display a listing of undone's todos
+     */
+    public function undone()
+    {
+        $datas = Todo::where('done', 0)->paginate(5);
+
+        return view('todos.index', compact('datas'));
+    }
+
+    /**
+     * Display a listing of done's todos
+     */
+    public function done()
+    {
+        $datas = Todo::where('done', 1)->paginate(5);
+
+        return view('todos.index', compact('datas'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

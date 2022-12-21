@@ -21,4 +21,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('todos/undone', [App\Http\Controllers\TodoController::class, 'undone'])->name('todos.undone');
+
+Route::get('todos/done', [App\Http\Controllers\TodoController::class, 'done'])->name('todos.done');
+
 Route::resource('todos', 'App\Http\Controllers\TodoController');
