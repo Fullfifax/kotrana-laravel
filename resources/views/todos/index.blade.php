@@ -5,7 +5,7 @@
     <div class="container">
 
         <div class="row mb-3">
-            <div class="col-md-2">
+            <div class="col-md-8">
                 <a href="{{ route('todos.create') }}" class="btn btn-secondary">Add new task</a>
             </div>
             <div class="col-md-2">
@@ -43,21 +43,26 @@
                         <form action="{{ route('todos.makedone', $data->id) }}" method="post">
                             @csrf
                             <!--  Data existed update -->
-                            @method('PUT')
+                            @method('GET')
                             <button type="submit" class="btn btn-warning">Undone</button>
                         </form>
                         @else
                         <form action="{{ route('todos.makeundone', $data->id) }}" method="post">
                             @csrf
                             <!--  Data existed update -->
-                            @method('PUT')
+                            @method('GET')
                             <button type="submit" class="btn btn-success">Done</button>
                         </form>
                         @endif
                         {{-- Button edit --}}
                         <a class="btn btn-secondary text-light mx-3" href="{{ route('todos.edit', $data->id) }}" type="button">Edit</a>
                         {{-- Button delete --}}
-                        <a class="btn btn-danger text-light" href="{{ route('todos.destroy', $data->id) }}" type="button">Delete</a>
+                        <form action="{{ route('todos.destroy', $data->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger text-light">Delete</a>
+                        </form>
+                        
                     </div>
                 </div>
             </div>
