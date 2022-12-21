@@ -38,19 +38,30 @@
                         @endif
                     </div>
                     <div class="col-sm d-flex justify-content-end">
+                        {{-- Button affected to user --}}
+                        <div class="dropdown show mx-3">
+                            <a class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Affect to
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                @foreach ($users as $user)
+                                    <a class="dropdown-item" href="/todos/{{ $data->id }}/affectedTo/{{ $user->id }}">{{ $user->name }}</a>
+                                @endforeach
+                            </div>
+                          </div>
                         {{-- Button Done/Undone --}}
                         @if($data->done == 0)
                         <form action="{{ route('todos.makedone', $data->id) }}" method="post">
                             @csrf
                             <!--  Data existed update -->
-                            @method('GET')
+                            @method('PUT')
                             <button type="submit" class="btn btn-warning">Undone</button>
                         </form>
                         @else
                         <form action="{{ route('todos.makeundone', $data->id) }}" method="post">
                             @csrf
                             <!--  Data existed update -->
-                            @method('GET')
+                            @method('PUT')
                             <button type="submit" class="btn btn-success">Done</button>
                         </form>
                         @endif

@@ -23,7 +23,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('todos/undone', [App\Http\Controllers\TodoController::class, 'undone'])->name('todos.undone');
 Route::get('todos/done', [App\Http\Controllers\TodoController::class, 'done'])->name('todos.done');
-Route::get('todos/makedone/{todo}', [App\Http\Controllers\TodoController::class, 'makedone'])->name('todos.makedone');
-Route::get('todos/makeundone/{todo}', [App\Http\Controllers\TodoController::class, 'makeundone'])->name('todos.makeundone');
+Route::put('todos/makedone/{todo}', [App\Http\Controllers\TodoController::class, 'makedone'])->name('todos.makedone');
+Route::put('todos/makeundone/{todo}', [App\Http\Controllers\TodoController::class, 'makeundone'])->name('todos.makeundone');
+Route::get('todos/{todo}/affectedTo/{user}', [App\Http\Controllers\TodoController::class, 'affectedto'])->name('todos.affectedto');
 
 Route::resource('todos', 'App\Http\Controllers\TodoController');
