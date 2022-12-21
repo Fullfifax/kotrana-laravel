@@ -29,11 +29,37 @@
         </div>
 
         @foreach ($datas as $data)
-            <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">    
-                {{ $data->name }}
-                @if($data->done)
-                    <span class="badge bg-success text-light">done</span>
-                @endif
+            <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">   
+                <div class="row">
+                    <div class="col-sm">
+                        {{ $data->name }}
+                        @if($data->done)
+                            <span class="badge bg-success text-light">done</span>
+                        @endif
+                    </div>
+                    <div class="col-sm d-flex justify-content-end">
+                        {{-- Button Done/Undone --}}
+                        @if($data->done == 0)
+                        <form action="{{ route('todos.makedone', $data->id) }}" method="post">
+                            @csrf
+                            <!--  Data existed update -->
+                            @method('PUT')
+                            <button type="submit" class="btn btn-warning">Undone</button>
+                        </form>
+                        @else
+                        <form action="{{ route('todos.makeundone', $data->id) }}" method="post">
+                            @csrf
+                            <!--  Data existed update -->
+                            @method('PUT')
+                            <button type="submit" class="btn btn-success">Done</button>
+                        </form>
+                        @endif
+                        {{-- Button edit --}}
+                        <a class="btn btn-secondary text-light mx-3" href="{{ route('todos.edit', $data->id) }}" type="button">Edit</a>
+                        {{-- Button delete --}}
+                        <a class="btn btn-danger text-light" href="{{ route('todos.destroy', $data->id) }}" type="button">Delete</a>
+                    </div>
+                </div>
             </div>
         @endforeach
 
