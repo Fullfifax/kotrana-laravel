@@ -97,17 +97,33 @@
                         </form>
                         @endif
                         {{-- Button edit --}}
+                        @can('edit', $data)
                         <form action="{{ route('todos.edit', $data->id) }}" class="mx-3" method="post">
                             @csrf
                             @method('GET')
                             <button type="submit" class="btn btn-secondary text-light">Edit</a>
                         </form>
+                        @elsecannot('edit', $data)
+                        <form action="{{ route('todos.edit', $data->id) }}" class="mx-3" method="post">
+                            @csrf
+                            @method('GET')
+                            <button type="submit" class="btn btn-secondary text-light" disabled>Edit</a>
+                        </form>
+                        @endcan
                         {{-- Button delete --}}
+                        @can('delete', $data)
                         <form action="{{ route('todos.destroy', $data->id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger text-light">Delete</a>
                         </form>
+                        @elsecannot('delete', $data)
+                        <form action="{{ route('todos.destroy', $data->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger text-light" disabled>Delete</a>
+                        </form>
+                        @endcan
                     </div>
                 </div>
             </div>
