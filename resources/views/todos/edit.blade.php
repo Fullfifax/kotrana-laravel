@@ -9,7 +9,7 @@
     <div class="card-body">
         <form action="{{ route('todos.update', $todo->id) }}" method="post">
             @csrf
-            @method('put')
+            @method('PUT')
             <div class="form-group">
                 <label for="name">Title</label>
                 <input id="name" class="form-control" type="text" name="name" value="{{ old('name', $todo->name) }}">

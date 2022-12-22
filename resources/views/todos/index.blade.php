@@ -99,7 +99,7 @@
                         {{-- Button edit --}}
                         <form action="{{ route('todos.edit', $data->id) }}" class="mx-3" method="post">
                             @csrf
-                            @method('PUT')
+                            @method('GET')
                             <button type="submit" class="btn btn-secondary text-light">Edit</a>
                         </form>
                         {{-- Button delete --}}

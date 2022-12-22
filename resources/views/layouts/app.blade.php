@@ -13,6 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Notify css -->
+    @notifyCss
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -81,5 +84,9 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Notify JS -->
+    <x:notify-messages />
+    @notifyJs
 </body>
 </html>

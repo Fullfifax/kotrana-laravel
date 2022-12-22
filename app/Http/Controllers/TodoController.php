@@ -101,6 +101,9 @@ class TodoController extends Controller
         // Save to database
         $todo->save();
 
+        // Flash notification
+        notify()->success("Todo #$todo->id added successfully :)");
+
         return redirect()->route('todos.index');
     }
 
@@ -140,6 +143,8 @@ class TodoController extends Controller
         }
         $todo->update($request->all());
 
+        notify()->success("Todo #$todo->id udpated successfully :)");
+
         return redirect()->route('todos.index');
     }
 
@@ -152,6 +157,8 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
+
+        notify()->error("Todo #$todo->id deleted successfully :)");
         
         return back();
     }
