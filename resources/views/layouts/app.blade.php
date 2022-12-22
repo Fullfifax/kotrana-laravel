@@ -54,7 +54,7 @@
                                     @endif
                                 </span>
                             </a>
-                            <div class="dropdown-menu" style="width:250px;" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 @if(count(Auth::User()->unreadNotifications) > 0)
                                 <div id="notificationsContainer" class="notifications-container">
                                     @foreach (Auth::User()->unreadNotifications as $notification)
