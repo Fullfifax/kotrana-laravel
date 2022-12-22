@@ -97,14 +97,17 @@
                         </form>
                         @endif
                         {{-- Button edit --}}
-                        <a class="btn btn-secondary text-light mx-3" href="{{ route('todos.edit', $data->id) }}" type="button">Edit</a>
+                        <form action="{{ route('todos.edit', $data->id) }}" class="mx-3" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-secondary text-light">Edit</a>
+                        </form>
                         {{-- Button delete --}}
                         <form action="{{ route('todos.destroy', $data->id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger text-light">Delete</a>
                         </form>
-                        
                     </div>
                 </div>
             </div>
