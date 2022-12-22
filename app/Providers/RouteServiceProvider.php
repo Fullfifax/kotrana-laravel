@@ -20,6 +20,15 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * The path to the "todos" route for your application.
+     *
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
+     */
+    public const TODOS = '/todos';
+
+    /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
      * @return void

@@ -32,10 +32,34 @@
             <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">   
                 <div class="row">
                     <div class="col-sm">
-                        {{ $data->name }}
-                        @if($data->done)
-                            <span class="badge bg-success text-light">done</span>
-                        @endif
+                        <details>
+                            <summary>
+                                <span class="my-0 bg-secondary text-light p-1">#{{ $data->id }}</span>
+                                {{ $data->name }}
+
+                                <small>
+                                    (created {{ $data->created_at->from() }} by 
+                                    {{ Auth::user()->id == $data->user->id ? 'myself' : $data->user->name }})
+                                    
+                                    @if ($data->todoAffectedTo && $data->todoAffectedTo->id == Auth::user()->id)
+                                        Affected by myself
+                                    @elseif ($data->todoAffectedTo)
+                                        {{ $data->todoAffectedTo ? ', affected to ' . $data->todoAffectedTo->name : '' }}
+                                    @endif
+                                    {{-- display affected by someone or by user himself --}}
+                                    @if ($data->todoAffectedTo && $data->todoAffectedBy && $data->todoAffectedBy->id == Auth::user()->id)
+                                        by myself
+                                    @elseif ($data->todoAffectedTo && $data->todoAffectedBy && $data->todoAffectedBy->id != Auth::user()->id)
+                                        by {{ $data->todoAffectedBy->name }}
+                                    @endif
+                                </small>
+
+                                @if($data->done)
+                                    <span class="badge bg-success text-light">done</span>
+                                @endif
+                            </summary>
+                            <p>{{ $data->description }}</p>
+                        </details>
                     </div>
                     <div class="col-sm d-flex justify-content-end">
                         {{-- Button affected to user --}}
