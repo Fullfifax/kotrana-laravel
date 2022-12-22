@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use App\Models\User;
+use App\Notifications\TodoAffected;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,8 @@ class TodoController extends Controller
         $todo->affectedTo_id = $user->id;
         $todo->affectedBy_id = Auth::user()->id;
         $todo->update();
+
+        $user->notify(new TodoAffected($todo));
 
         return back();
     }
@@ -101,6 +104,9 @@ class TodoController extends Controller
         // Save to database
         $todo->save();
 
+        // Flash notification
+        notify()->success("Todo #$todo->id added successfully :)");
+
         return redirect()->route('todos.index');
     }
 
@@ -140,6 +146,8 @@ class TodoController extends Controller
         }
         $todo->update($request->all());
 
+        notify()->success("Todo #$todo->id udpated successfully :)");
+
         return redirect()->route('todos.index');
     }
 
@@ -152,6 +160,8 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
+
+        notify()->error("Todo #$todo->id deleted successfully :)");
         
         return back();
     }
@@ -166,6 +176,8 @@ class TodoController extends Controller
         $todo->done = 1;
         $todo->update();
         
+        notify()->success("Todo #$todo->id done :)");
+
         return back();
     }
 
@@ -178,6 +190,8 @@ class TodoController extends Controller
     public function makeUndone(Todo $todo) {
         $todo->done = 0;
         $todo->update();
+
+        notify()->warning("Todo #$todo->id undone");
 
         return back();
     }

@@ -15,12 +15,12 @@
             <div class="col-md-2">
                 <a href="{{ route('todos.done') }}" class="btn btn-success">Todo done</a>
             @elseif(Route::currentRouteName() == 'todos.done')
-            <a href="{{ route('todos.index') }}" class="text-light btn btn-dark">All todos</a>
+            <a href="{{ route('todos.index') }}" class="text-light btn btn-secondary">All todos</a>
             </div>
             <div class="col-md-2">
                 <a href="{{ route('todos.undone') }}" class="btn btn-warning">Todo undone</a>
                 @elseif(Route::currentRouteName() == 'todos.undone')
-                <a href="{{ route('todos.index') }}" class="text-light btn btn-dark">All todos</a>
+                <a href="{{ route('todos.index') }}" class="text-light btn btn-secondary">All todos</a>
             </div>
             <div class="col-md-2">
                 <a href="{{ route('todos.done') }}" class="btn btn-success">Todo done</a>
@@ -79,7 +79,7 @@
                                     <a class="dropdown-item" href="/todos/{{ $data->id }}/affectedTo/{{ $user->id }}">{{ $user->name }}</a>
                                 @endforeach
                             </div>
-                          </div>
+                        </div>
                         {{-- Button Done/Undone --}}
                         @if($data->done == 0)
                         <form action="{{ route('todos.makedone', $data->id) }}" method="post">
@@ -99,7 +99,7 @@
                         {{-- Button edit --}}
                         <form action="{{ route('todos.edit', $data->id) }}" class="mx-3" method="post">
                             @csrf
-                            @method('PUT')
+                            @method('GET')
                             <button type="submit" class="btn btn-secondary text-light">Edit</a>
                         </form>
                         {{-- Button delete --}}

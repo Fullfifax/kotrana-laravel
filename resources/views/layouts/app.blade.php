@@ -13,6 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Notify css -->
+    @notifyCss
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -40,6 +43,39 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        @auth
+                        <!-- Notifications -->
+                        <div class="dropdown show mx-3">
+                            <a class="dropdown-toggle d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="mt-2" src="{{ asset('icons/notification.png') }}" style="height:25px;width:25px;" alt="notifications">
+                                <span class="text-light bg-danger px-1">
+                                    @if(count(Auth::User()->unreadNotifications) > 0)
+                                        {{ count(Auth::User()->unreadNotifications) }}
+                                    @endif
+                                </span>
+                            </a>
+                            <div class="dropdown-menu" style="width:250px;" aria-labelledby="dropdownMenuLink">
+                                @if(count(Auth::User()->unreadNotifications) > 0)
+                                <div id="notificationsContainer" class="notifications-container">
+                                    @foreach (Auth::User()->unreadNotifications as $notification)
+                                        <div class="notifications-body">
+                                            <h5 class="font-bold px-3">Notification</h5>
+                                            <p class="notification-texte mx-auto px-3">
+                                                <small>
+                                                    <span>
+                                                        {{ $notification->data['affected_by'] }}
+                                                        has affected todo "{{ $notification->data['todo_name'] }}"
+                                                    </span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                        {{ Auth::User()->unreadNotifications->markAsRead() }}
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                        @endauth
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -81,5 +117,9 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Notify JS -->
+    <x:notify-messages />
+    @notifyJs
 </body>
 </html>
