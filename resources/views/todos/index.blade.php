@@ -56,6 +56,13 @@
 
                                 @if($data->done)
                                     <span class="badge bg-success text-light">done</span>
+                                    <small>
+                                        <p>
+                                            Finished
+                                            {{ $data->updated_at->from() }} - Finished on 
+                                            {{ $data->updated_at->diffForHumans($data->created_at, 1) }}
+                                        </p>
+                                    </small>
                                 @endif
                             </summary>
                             <p>{{ $data->description }}</p>
@@ -79,14 +86,14 @@
                             @csrf
                             <!--  Data existed update -->
                             @method('PUT')
-                            <button type="submit" class="btn btn-warning">Undone</button>
+                            <button type="submit" class="btn btn-success">Done</button>
                         </form>
                         @else
                         <form action="{{ route('todos.makeundone', $data->id) }}" method="post">
                             @csrf
                             <!--  Data existed update -->
                             @method('PUT')
-                            <button type="submit" class="btn btn-success">Done</button>
+                            <button type="submit" class="btn btn-warning">Undone</button>
                         </form>
                         @endif
                         {{-- Button edit --}}
