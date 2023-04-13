@@ -1,5 +1,6 @@
 # kotrana-laravel
 <img src="kotrana-laravel.png" alt="kotrana-laravel picture" title="kotrana-laravel picture">
+Simple to do list using laravel (with authentication + notification)
 
 ### Prerequisites
 - Composer
